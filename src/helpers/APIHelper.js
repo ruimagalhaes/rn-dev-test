@@ -1,43 +1,25 @@
 import { getSecrets } from './SecretsHelper';
 
-const BASE_URL = '';
+const BASE_URL = 'https://test.inploi.me/';
 const API_URL = '';
 
 const buildUrlWithPath = (path) => {
   return `${BASE_URL}${API_URL}${path}`;
 };
 
-const encodeParams = (params) => {
-  let encodedParams = [];
-  for (const property in params) {
-    const encodedKey = encodeURIComponent(property);
-    const encodedValue = encodeURIComponent(params[property]);
-    encodedParams.push(`${encodedKey}=${encodedValue}`);
-  }
-  encodedParams = encodedParams.join('&');
-  return encodedParams;
-};
-
-const buildAuthParams = (authData) => {
-  if (authData != null) {
-    return {
-      'X-USER-EMAIL': authData.email,
-      'X-USER-TOKEN': authData.auth_token,
-      'Content-Type': 'application/x-www-form-urlencoded'
-    };
-  }
-};
-
-
 export const performAuthRequest = (email, password) => { 
   return (
-    fetch(buildUrlWithPath('auth'), {
+    fetch(buildUrlWithPath('token'), {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'application/json',
       },
-      body: encodeParams({ email, password })
+      body: JSON.stringify({
+        client_secret: 'dk5j4uafcF9dabEIpjjbOPTP', 
+        client_id: 'rui@whitesmith.co',
+        grant_type: 'client_credentials'
+      })
     })
   );
 };
@@ -45,36 +27,13 @@ export const performAuthRequest = (email, password) => {
 export const get = (path) => {
   return (
     getSecrets()
-    .then((authData) =>
-      fetch(buildUrlWithPath(path), {
+    .then((accessToken) =>
+      fetch(`${buildUrlWithPath(path)}?token=${accessToken}` , {
         method: 'GET',
-        headers: buildAuthParams(authData)
-      })
-    )
-  );
-};
-
-export const put = (path, params) => {
-  return (
-    getSecrets()
-    .then((authData) =>
-      fetch(buildUrlWithPath(path), {
-        method: 'PUT',
-        headers: buildAuthParams(authData),
-        body: encodeParams(params)
-      })
-    )
-  );
-};
-
-export const post = (path, params) => {
-  return (
-    getSecrets()
-    .then((authData) =>
-      fetch(buildUrlWithPath(path), {
-        method: 'POST',
-        headers: buildAuthParams(authData),
-        body: encodeParams(params)
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
       })
     )
   );

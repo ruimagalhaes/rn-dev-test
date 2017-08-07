@@ -1,11 +1,16 @@
 import React from 'react';
 import { StackNavigator } from 'react-navigation';
-import TemplateScreen from './components/TemplateScreen';
+import { NavigationStyles } from './styles';
+import LoginScreen from './components/LoginScreen';
+import JobsScreen from './components/JobsScreen';
 
 export const MainStack = StackNavigator({
   
-  TemplateScreen: {
-    screen: TemplateScreen
+  LoginScreen: {
+    screen: LoginScreen
+  },
+  JobsScreen: {
+    screen: JobsScreen
   },
 }, {
   

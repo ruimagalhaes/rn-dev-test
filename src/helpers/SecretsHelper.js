@@ -1,12 +1,8 @@
 import * as Keychain from 'react-native-keychain';
 
-export const setSecrets = (email, authToken, userId) => {
-  const credentials = {
-    auth_token: authToken,
-    user_id: userId
-  };
+export const setSecrets = (accessToken) => {
   Keychain
-    .setGenericPassword(email, JSON.stringify(credentials));
+    .setGenericPassword('access_token', accessToken);
 };
 
 export const getSecrets = () => {
@@ -29,10 +25,5 @@ const getCredentialsFromJson = (credentials) => {
     return undefined;
   }
 
-  const obj = JSON.parse(credentials.password);
-  return {
-    email: credentials.username,
-    auth_token: obj.auth_token,
-    user_id: obj.user_id
-  };
+  return credentials.password;
 };
