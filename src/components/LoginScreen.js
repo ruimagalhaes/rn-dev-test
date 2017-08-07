@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity} from 'react-native';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import { requestAuth, emailChanged, passwordChanged } from '../actions';
-import { viewStyles, inputStyles, buttonStyles } from '../styles';
+import { viewStyles, inputStyles, buttonStyles, textStyles } from '../styles';
 
 class LoginScreen extends Component { 
 
@@ -30,6 +30,7 @@ class LoginScreen extends Component {
     const { container, centerVertical, centerHorizontal } = viewStyles;
     const { login } = inputStyles;
     const { regular } = buttonStyles;
+    const { medium, button } = textStyles;
 
     return (
       <View style={[ container ]}>
@@ -56,7 +57,7 @@ class LoginScreen extends Component {
           onPress={this.onButtonPress.bind(this)}
           style = {[ regular, centerHorizontal, centerVertical, { margin: 10 }]}
           >
-          <Text>
+          <Text style={[ medium, button ]}>
             Login
           </Text>
         </TouchableOpacity>

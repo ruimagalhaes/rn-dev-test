@@ -16,7 +16,8 @@ export default (state = INITIAL_STATE, action) => {
     case JOBS_REQUEST_FAILED:
       return { ...state, loading: false};
     case JOBS_REQUEST_SUCCESS:
-      return { ...state, loading: false, jobList: action.payload};
+      console.log(action.payload.browse);
+      return { ...state, loading: false, jobList: action.payload.browse };
     default:
       return state;
   }
