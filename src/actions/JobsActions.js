@@ -9,13 +9,13 @@ import {
   showErrorAlert, 
 } from '../helpers';
 
-export const getJobs = () => {
+export const getJobs = (page) => {
   return (dispatch) => {
     dispatch({
       type: JOBS_REQUEST_STARTED
     });
 
-    get('jobs')
+    get(`jobs/${page}`)
     .then((response) => {
       handleResponse(dispatch, response, jobRequestSuccess, jobRequestFail);
     })

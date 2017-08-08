@@ -9,6 +9,15 @@ export const textStyles = {
   medium: {
     fontSize: 15,
   },
+  large: {
+    fontSize: 17,
+  },
+  big: {
+    fontSize: 20,
+  },
+  bold: {
+    fontWeight: 'bold'
+  },
   button: {
     color: COLOR_WHITE, 
   },

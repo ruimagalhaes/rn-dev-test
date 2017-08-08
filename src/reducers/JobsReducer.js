@@ -7,6 +7,7 @@ import {
 const INITIAL_STATE = {
   jobList: [],
   loading: false,
+  page: 1
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -16,8 +17,7 @@ export default (state = INITIAL_STATE, action) => {
     case JOBS_REQUEST_FAILED:
       return { ...state, loading: false};
     case JOBS_REQUEST_SUCCESS:
-      console.log(action.payload.browse);
-      return { ...state, loading: false, jobList: action.payload.browse };
+      return { ...state, loading: false, jobList: [...state.jobList,  ...action.payload.browse], page: state.page+1 };
     default:
       return state;
   }

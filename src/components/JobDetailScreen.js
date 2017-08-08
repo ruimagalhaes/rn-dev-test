@@ -1,28 +1,89 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
-import { viewStyles, textStyles } from '../styles';
+import { View, Text, Image, Dimensions, TouchableOpacity, ScrollView } from 'react-native';
+import { viewStyles, textStyles, buttonStyles } from '../styles';
 
 class JobDetailScreen extends Component { 
   
+  getTermString(term) {
+    return (term === 'pt') ? 'Part-Time' : 'Full-Time';
+  }
+
   render () {
-    const { container, row, centerVertical, centerHorizontal } = viewStyles;
-    const { medium, title } = textStyles;
-    const { cellMargin } = marginStyles;
+
+    const deviceWidth = Dimensions.get('window').width;
+
+    const { container, row, detailBackground, coverImageView, centerHorizontal, centerVertical} = viewStyles;
+    const { large, big, bold, medium, title, button } = textStyles;
+    const { roleMargin, companyMargin, detailMargin, rateMargin, buttonMargin } = marginStyles;
+    const { regular } = buttonStyles;
+
+    const job = this.props.navigation.state.params.item;
 
     return (
-      <View style={[ container ]}>
-        <Text style={[ medium, title ]}>
-          { this.props.navigation.state.params.item.company }
-        </Text>
-      </View>
+
+      <ScrollView>
+        <View style={[ container, detailBackground ]}>
+          <Image
+            style={[ coverImageView, {width: deviceWidth}]}
+            source={{uri: `https://res.cloudinary.com/chris-mackie/image/upload/v${job.company_img_v}/${job.company_img}`}}
+          />
+          <Text style={[ big, bold, roleMargin ]}>
+            {job.role}
+          </Text>
+          <Text style={[ large, companyMargin ]}>
+            {job.company}
+          </Text>
+          <Text style={[ title, detailMargin ]}>
+            {this.getTermString(job.job_term)}
+          </Text>
+          <Text style={[ title, detailMargin ]}>
+            {job.location_city}
+          </Text>
+          <View style={[ row, rateMargin ]}>
+            <Text style={[ big, bold ]}>
+              {`£${job.rate}  `}
+            </Text>
+            <Text style={[ big, title ]}>
+              {`(${job.rate_type})`}
+            </Text>
+          </View>
+          <TouchableOpacity style = {[ regular, centerHorizontal, centerVertical, buttonMargin ]}>
+            <Text style={[ medium, bold, button ]}>
+              Apply Now
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+      
     );
   }
   
 }
 
 const marginStyles = {
-  cellMargin: { 
-    marginBottom: 1,
+  roleMargin: {
+    marginLeft: 10,
+    marginTop: 20,
+    marginBottom: 3
+  },
+  companyMargin: {
+    marginLeft: 10,
+    marginTop: 3,
+    marginBottom: 25
+  },
+  detailMargin: {
+    marginLeft: 10,
+    marginBottom: 5
+  },
+  rateMargin: {
+    marginLeft: 10,
+    marginTop: 25,
+    marginBottom: 25,
+  },
+  buttonMargin: { 
+    marginTop: 30,
+    marginLeft: 10,
+    marginRight: 10
   }
 };
 

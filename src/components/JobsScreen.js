@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, FlatList} from 'react-native';
+import { View, Text, TextInput, FlatList, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 import { getJobs } from '../actions';
 import { JobCell } from './JobCell';
-import { viewStyles, inputStyles, buttonStyles } from '../styles';
+import { viewStyles, inputStyles, buttonStyles, textStyles } from '../styles';
 
 class JobScreen extends Component { 
 
   componentDidMount () {
-    this.props.getJobs();
+    this.props.getJobs(this.props.page);
   }
 
   _renderItem = ({item}) => (
@@ -18,6 +18,23 @@ class JobScreen extends Component {
       onPress={() => this.props.navigation.navigate('JobDetailScreen', { item: item })}
     />
   );
+
+  _renderFooter = () => {
+    const { regular } = buttonStyles;
+    const { centerVertical, centerHorizontal } = viewStyles;
+    const { medium, bold, button } = textStyles;
+    return (
+      <TouchableOpacity 
+          onPress = {() => this.props.getJobs(this.props.page)}
+          style = {[ regular, centerHorizontal, centerVertical, { margin: 10 } ]}
+          >
+          <Text style={[ medium, bold, button ]}>
+            Load More Jobs
+          </Text>
+        </TouchableOpacity>
+    );
+  }
+  
 
   _keyExtractor = (item, index) => item.id;
 
@@ -30,23 +47,27 @@ class JobScreen extends Component {
           data={this.props.jobList}
           keyExtractor={this._keyExtractor}
           renderItem={this._renderItem}
+          ListFooterComponent={this._renderFooter}
         />
       </View>
     );
   }
-
 }
 
+
 const mapStateToProps = ({ jobs }) => {
-  console.log(jobList)
   const {
     jobList,
-    loading
+    loading,
+    page
   } = jobs;
+
+  console.log(jobList)
 
   return { 
     jobList,
-    loading
+    loading,
+    page
   };
 };
 
