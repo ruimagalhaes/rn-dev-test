@@ -39,6 +39,8 @@ class LoginScreen extends Component {
         <TextInput
           secureTextEntry={false}
           autoCorrect={false}
+          autoCapitalize={'none'}
+          keyboardType={'email-address'}
           underlineColorAndroid='transparent'
           onChangeText={this.onEmailChange.bind(this)}
           placeholder={'email'}
@@ -51,6 +53,7 @@ class LoginScreen extends Component {
         <TextInput
           secureTextEntry={true}
           autoCorrect={false}
+          autoCapitalize={'none'}
           underlineColorAndroid='transparent'
           onChangeText={this.onPasswordChange.bind(this)}
           placeholder={'password'}
@@ -94,14 +97,14 @@ const marginStyles = {
 
 const mapStateToProps = ({ auth }) => {
   const {
-    username,
+    email,
     password,
     loading,
     navigateToJobs
   } = auth;
 
   return { 
-    username,
+    email,
     password,
     loading,
     navigateToJobs

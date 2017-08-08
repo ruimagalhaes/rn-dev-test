@@ -16,8 +16,8 @@ export const performAuthRequest = (email, password) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        client_secret: 'dk5j4uafcF9dabEIpjjbOPTP', 
-        client_id: 'rui@whitesmith.co',
+        client_secret: password, 
+        client_id: email,
         grant_type: 'client_credentials'
       })
     })
